@@ -37,13 +37,13 @@ EXPOSE 53/tcp
 
 
 USER root
-#RUN mkdir -p /app
-#COPY entrypoint.sh /app/entrypoint.sh
+RUN mkdir -p /app
+COPY entrypoint.sh /app/entrypoint.sh
 #COPY wait-for-it.sh /app/wait-for-it.sh
-#RUN chmod 755 /app/entrypoint.sh && chmod 755 /app/wait-for-it.sh
-#RUN chown -R pdns:pdns /app
+RUN chmod 755 /app/entrypoint.sh 
+#&& chmod 755 /app/wait-for-it.sh
+RUN chown -R pdns:pdns /app
 
 #USER pdns 
-#ENTRYPOINT ["/app/entrypoint.sh"]
-#CMD ["app:start"]
-CMD ["bash"]
+ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["app:start"]
