@@ -18,13 +18,11 @@ RUN apt-get update \
   && apt-get install -y locales \
   && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
   && apt-get install -y curl git gnupg \
-	&& apt-get install -y pdns-recursor
+	&& apt-get install -y pdns-recursor \
+  && rm -rf /var/lib/apt/lists/* 
 
 
-
-EXPOSE 8081
-EXPOSE 53/udp
-EXPOSE 53/tcp 
+EXPOSE 8081 53/udp 53/tcp 
 
 
 USER root
