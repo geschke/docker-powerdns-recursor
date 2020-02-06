@@ -36,9 +36,16 @@ file_env() {
 # Initialize values that might be stored in a file when using Docker secret
 file_env 'PDNS_ALLOW_FROM'
 file_env 'PDNS_LOCAL_ADDRESS'
+file_env 'PDNS_LOCAL_PORT'
+file_env 'PDNS_FORWARD_ZONES'
+file_env 'PDNS_FORWARD_ZONES_FILEPATH'
+
 
 PDNS_ALLOW_FROM=${PDNS_ALLOW_FROM:-}
 PDNS_LOCAL_ADDRESS=${PDNS_LOCAL_ADDRESS:-}
+PDNS_LOCAL_PORT=${PDNS_LOCAL_PORT:-}
+PDNS_FORWARD_ZONES=${PDNS_FORWARD_ZONES:-}
+PDNS_FORWARD_ZONES_FILEPATH=${PDNS_FORWARD_ZONES_FILEPATH:-}
 
 
 PDNS_AUTOCONFIG=${PDNS_AUTOCONFIG:-true}
@@ -96,6 +103,38 @@ if ${PDNS_AUTOCONFIG} ; then
     sed -i -E "s,(^local-address=)(.*),\1${PDNS_LOCAL_ADDRESS},g" ${PDNS_CONFIG_FILE};
 
   fi
+
+  if [[ ! -z "$PDNS_LOCAL_PORT" ]] ; then
+
+    grep -q "^local-address=" ${PDNS_CONFIG_FILE} || echo "local-port=" | tee --append ${PDNS_CONFIG_FILE} > /dev/null;
+    PDNS_LOCAL_PORT="$(echo $PDNS_LOCAL_PORT | sed 's/\./\\\./g')"
+    PDNS_LOCAL_PORT="$(echo $PDNS_LOCAL_PORT | sed 's/\,/\\\,/g')"
+    PDNS_LOCAL_PORT="$(echo $PDNS_LOCAL_PORT | sed 's,\/,\\\/,g')"
+    sed -i -E "s,(^local-port=)(.*),\1${PDNS_LOCAL_PORT},g" ${PDNS_CONFIG_FILE};
+
+  fi
+
+
+  if [[ ! -z "$PDNS_FORWARD_ZONES" ]] ; then
+
+    grep -q "^forward-zones=" ${PDNS_CONFIG_FILE} || echo "forward-zones=" | tee --append ${PDNS_CONFIG_FILE} > /dev/null;
+    PDNS_FORWARD_ZONES="$(echo $PDNS_FORWARD_ZONES | sed 's/\./\\\./g')"
+    PDNS_FORWARD_ZONES="$(echo $PDNS_FORWARD_ZONES | sed 's/\,/\\\,/g')"
+    PDNS_FORWARD_ZONES="$(echo $PDNS_FORWARD_ZONES | sed 's,\/,\\\/,g')"
+    sed -i -E "s,(^forward-zones=)(.*),\1${PDNS_FORWARD_ZONES},g" ${PDNS_CONFIG_FILE};
+
+  fi
+
+  if [[ ! -z "$PDNS_FORWARD_ZONES_FILEPATH" ]] ; then
+
+    grep -q "^forward-zones-file=" ${PDNS_FORWARD_ZONES_FILEPATH} || echo "forward-zones-file=" | tee --append ${PDNS_CONFIG_FILE} > /dev/null;
+    PDNS_FORWARD_ZONES_FILEPATH="$(echo $PDNS_FORWARD_ZONES_FILEPATH | sed 's/\./\\\./g')"
+    PDNS_FORWARD_ZONES_FILEPATH="$(echo $PDNS_FORWARD_ZONES_FILEPATH | sed 's/\,/\\\,/g')"
+    PDNS_FORWARD_ZONES_FILEPATH="$(echo $PDNS_FORWARD_ZONES_FILEPATH | sed 's,\/,\\\/,g')"
+    sed -i -E "s,(^forward-zones-file=)(.*),\1${PDNS_FORWARD_ZONES_FILEPATH},g" ${PDNS_CONFIG_FILE};
+
+  fi
+
 
 fi
 
