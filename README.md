@@ -1,8 +1,5 @@
 # geschke/powerdns-recursor
 
-[![Image Size](https://images.microbadger.com/badges/image/geschke/powerdns-recursor.svg)](https://microbadger.com/images/geschke/powerdns-recursor)
-[![Version](https://images.microbadger.com/badges/version/geschke/powerdns-recursor.svg)](https://microbadger.com/images/geschke/powerdns-recursor)
-[![Docker Automated build](https://img.shields.io/docker/cloud/build/geschke/powerdns-recursor)](https://hub.docker.com/r/geschke/powerdns-recursor)
 
 This is a Docker image with PowerDNS recursor.
 
