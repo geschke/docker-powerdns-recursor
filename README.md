@@ -1,6 +1,5 @@
 # geschke/powerdns-recursor
 
-
 This is a Docker image with PowerDNS recursor.
 
 ## Usage
