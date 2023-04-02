@@ -1,5 +1,9 @@
 # geschke/powerdns-recursor
 
+![Docker Pulls](https://img.shields.io/docker/pulls/geschke/powerdns-recursor)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/geschke/powerdns-recursor/latest)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/geschke/docker-powerdns-recursor/docker-publish.yml)
+
 This is a Docker image with PowerDNS recursor.
 
 ## Usage
@@ -29,7 +33,7 @@ These environment variables create a minimal configuration. If this does not fit
 
 ```
  docker run -d --publish 192.168.1.1:53:53/udp --publish 192.168.1.1:53:53/tcp \
- --publish 8081:8081 --env "PDNS_API_KEY=Ix2phee9"  \
+ --publish 8081:8081 --env "PDNS_API_KEY=<API_KEY>"  \
  --env PDNS_ALLOW_FROM="192.168.1.0/24,172.20.0.0/16,172.21.0.0/16,172.22.0.0/16" \
  --env PDNS_LOCAL_ADDRESS=0.0.0.0 \
  --name pdns_rec \
