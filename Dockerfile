@@ -2,7 +2,7 @@ FROM ubuntu:jammy-20230308
 
 LABEL maintainer="Ralf Geschke <ralf@kuerbis.org>"
 
-LABEL last_changed="2023-04-01"
+LABEL last_changed="2023-04-02"
 
 
 # necessary to set default timezone Etc/UTC
@@ -19,6 +19,7 @@ RUN apt-get update \
   && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
   && apt-get install -y curl git gnupg \
 	&& apt-get install -y pdns-recursor \
+  && apt-get -y upgrade \
   && rm -rf /var/lib/apt/lists/* 
 
 
@@ -26,9 +27,9 @@ EXPOSE 8081 53/udp 53/tcp
 
 
 USER root
-RUN mkdir -p /app
+RUN mkdir -p /app && mkdir /run/pdns-recursor && chown -R root:pdns /run/pdns-recursor
 COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod 755 /app/entrypoint.sh && chown -R pdns:pdns /app
+RUN chmod 755 /app/entrypoint.sh && chown -R pdns:pdns /app 
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["app:start"]
