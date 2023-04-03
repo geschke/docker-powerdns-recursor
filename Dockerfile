@@ -1,15 +1,15 @@
-FROM ubuntu:jammy-20230308
+FROM ubuntu:kinetic-20230308
 
 LABEL maintainer="Ralf Geschke <ralf@kuerbis.org>"
 
-LABEL last_changed="2023-04-02"
+LABEL last_changed="2023-04-03"
 
 
 # necessary to set default timezone Etc/UTC
 ENV DEBIAN_FRONTEND noninteractive
 
 
-# Ubuntu 22.04 jammy
+# Ubuntu 22.10 kinetic
 RUN apt-get update \
   && apt-get -y upgrade \
   && apt-get -y dist-upgrade \
