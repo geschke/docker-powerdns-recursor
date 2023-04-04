@@ -1,15 +1,15 @@
-FROM ubuntu:kinetic-20230308
+FROM ubuntu:lunar-20230314
 
 LABEL maintainer="Ralf Geschke <ralf@kuerbis.org>"
 
-LABEL last_changed="2023-04-03"
+LABEL last_changed="2023-04-04"
 
 
 # necessary to set default timezone Etc/UTC
 ENV DEBIAN_FRONTEND noninteractive
 
 
-# Ubuntu 22.10 kinetic
+# Ubuntu 23.04 lunar
 RUN apt-get update \
   && apt-get -y upgrade \
   && apt-get -y dist-upgrade \
